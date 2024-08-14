@@ -48,7 +48,7 @@
         padding: 12px;
         border-radius: 10px;
         background: #eee;
-        color: #5f6368;
+        color: #5F6368;
         font-weight: 700;
       }
 
@@ -76,6 +76,10 @@
       cursor: pointer;
       &:hover {
         opacity: 0.8;
+      }
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
       }
     }
   }

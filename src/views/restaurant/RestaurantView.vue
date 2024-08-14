@@ -1,38 +1,19 @@
 <script setup>
 import FirstFloorView from "@/views/firstFloor/FirstFloorView.vue";
 import Modal from "@/components/modal/Modal.vue";
-import Booking from "@/components/booking/Booking.vue";
-import Notification from "@/components/notification/Notification.vue";
-import { computed, onMounted, ref, watchEffect } from "vue";
+import { ref } from "vue";
 
 const isModal = ref(false);
-const isBooking = ref(false);
-const isNotification = ref(false);
-const chairId = ref(NaN);
+const selectedChair = ref({});
 
-const modalOpen = (id) => {
-  chairId.value = id;
+const modalOpen = (item) => {
+  selectedChair.value = item;
   isModal.value = true;
 };
 
-const modalClose = (boolean) => {
-  isModal.value = boolean;
-};
-
-const bookingOpen = (boolean) => {
-  isBooking.value = boolean;
-};
-
-const bookingClose = (boolean) => {
-  isBooking.value = boolean;
-};
-
-const notificationOpen = (boolean) => {
-  isNotification.value = boolean;
-};
-
-const notificationClose = (boolean) => {
-  isNotification.value = boolean;
+const modalClose = () => {
+  isModal.value = false;
+  selectedChair.value = {};
 };
 </script>
 
@@ -41,12 +22,12 @@ const notificationClose = (boolean) => {
     <FirstFloorView
       @modal-open="modalOpen"
       :active="isModal"
-      :chairId="chairId"
+      :selected-chair="selectedChair"
     />
     <Modal
       v-show="isModal"
-      @modal-close="modalClose"
-      @booking-open="bookingOpen"
+      :selected-chair="selectedChair"
+      :modal-close="modalClose"
     />
     <!--    <Booking v-show="isBooking" @booking-close="bookingClose" @notification-open="notificationOpen"  />-->
     <!--    <Notification v-if="isNotification" @notification-close="notificationClose" />-->

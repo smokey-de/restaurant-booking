@@ -19,7 +19,7 @@ function useInitializeStore(apiCall) {
 export const myStore = defineStore("myStore", () => {
   const data = ref(chairsPathFloor1_1);
 
-  const { initialized, loading } = useInitializeStore(async () => {
+  async function getChairDate() {
     const res = await fetch("https://json-server-crfx.onrender.com/data").then(
       (res) => res.json()
     );
@@ -37,7 +37,9 @@ export const myStore = defineStore("myStore", () => {
       }
     }
     data.value = result;
-  });
+  }
+
+  getChairDate();
 
   const firsFloorData = computed(() =>
     data.value.filter((item) => item.floor === 1)
@@ -46,5 +48,5 @@ export const myStore = defineStore("myStore", () => {
     data.value.filter((item) => item.floor === 2)
   );
 
-  return { firsFloorData, secondFloorData, initialized, loading };
+  return { firsFloorData, secondFloorData, getChairDate };
 });

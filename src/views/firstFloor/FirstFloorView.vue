@@ -1,16 +1,15 @@
 <script setup>
 import { myStore } from "@/helpers/common-api.js";
+
 const store = myStore();
 
 const props = defineProps({
   active: Boolean,
-  chairId: Number,
+  selectedChair: {
+    type: Object,
+    default: () => {},
+  },
 });
-
-// onMounted(() => {
-//   store.increment();
-// });
-//
 </script>
 
 <template>
@@ -42,9 +41,9 @@ const props = defineProps({
             :d="item.path"
             fill="white"
             fill-opacity="0.5"
-            @click="$emit('modal-open', item.id)"
+            @click="$emit('modal-open', item)"
             :class="{
-              active: active && chairId === item.id,
+              active: active && props.selectedChair?.id === item.id,
               busy: item?.isBooked,
             }"
           />
@@ -58,7 +57,7 @@ const props = defineProps({
             :fill="
               item?.isBooked ? 'url(#pattern0_284_4)' : 'url(#pattern1_284_4)'
             "
-            @click="$emit('modal-open', item.id)"
+            @click="$emit('modal-open', item)"
           />
           <path
             d="M1166.32 754.612L1172.99 758.253L1180.73 762.497L1187.64 765.835L1200.38 763.076L1213.76 753.959L1216.76 745.364L1215.3 739.708C1215.3 739.708 1216.57 737.259 1216.76 733.3C1216.95 729.342 1216.97 729.317 1213.48 727.203C1209.98 725.089 1209.34 727.619 1206.11 730.411C1202.88 733.202 1202.1 733.431 1202.1 733.431L1200.2 732.492C1200.2 732.492 1202.25 729.317 1202.12 724.967C1201.99 720.616 1201.5 720.722 1198.92 719.628C1196.34 718.535 1195.19 718.429 1192.95 721.481C1190.71 724.534 1187.14 725.881 1187.14 725.881L1181.96 722.934L1167.83 732.68L1167.75 739.038C1167.75 739.038 1165.98 738.573 1165.98 740.002C1165.98 741.43 1166.11 743.887 1166.81 745.266C1167.52 746.646 1168.14 747.584 1168.14 747.584L1166.22 753.6L1166.32 754.62V754.612Z"

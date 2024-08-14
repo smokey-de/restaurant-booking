@@ -1,21 +1,79 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import InputText from "primevue/inputtext";
+import InputMask from "primevue/inputmask";
+import { VueSpinner } from "vue3-spinners";
+import { myStore } from "@/helpers/common-api.js";
+const store = myStore();
 
-const formValues = ref({
-  name: "",
-  phone_number: "",
+const props = defineProps({
+  selectedChair: {
+    type: Object,
+    default: () => {},
+  },
+  modalClose: {
+    type: Function,
+    default: () => {},
+  },
 });
 
+watch(
+  () => props.selectedChair,
+  (newValue) => {
+    formValues.value = {
+      name: newValue?.name,
+      phone_number: newValue?.phone_number,
+    };
+  }
+);
+
+const formValues = ref({
+  name: props?.name,
+  phone_number: props.selectedChair?.phone_number,
+});
+const isLoading = ref(false);
+
 const onSubmit = () => {
+  if (!props.selectedChair.id) return;
   const { name, phone_number } = formValues.value;
-  console.log(name, phone_number, formValues.value);
+  const payload = {
+    name: !props.selectedChair.isBooked ? name : "",
+    phone_number: !props.selectedChair.isBooked ? phone_number : "",
+    id: props.selectedChair.id,
+    isBooked: !props.selectedChair.isBooked,
+    floor: props.selectedChair.floor,
+  };
+
+  isLoading.value = true;
+
+  fetch(
+    `https://json-server-crfx.onrender.com/data/${props.selectedChair.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      setTimeout(() => {
+        store.getChairDate();
+        props.modalClose();
+        isLoading.value = false;
+      }, 1000);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      isLoading.value = false;
+    });
 };
 </script>
 
 <template>
   <Transition name="modal">
-    <div class="modal" @click="$emit('modal-close', false)">
+    <div class="modal" @click="props.modalClose">
       <div class="modal__content container">
         <form class="modal__form" @submit.prevent="onSubmit" @click.stop>
           <div class="modal__form-item">
@@ -24,16 +82,22 @@ const onSubmit = () => {
           </div>
           <div class="modal__form-item">
             <label class="modal__form-label">Номер телефона</label>
-            <InputText
+            <InputMask
               v-model="formValues.phone_number"
-              placeholder="Номер телефона"
+              mask="+(99) 999-99-99"
+              placeholder="+(99) 999-99-99"
             />
           </div>
-          <button class="modal__form-btn modal_success" type="submit">
-            Забронировать
-          </button>
-          <button class="modal__form-btn modal_cancel" type="submit">
-            Удалить бронь
+          <button
+            :class="`modal__form-btn ${
+              props.selectedChair.isBooked ? 'modal_cancel' : 'modal_success'
+            }`"
+            type="submit"
+          >
+            <VueSpinner v-show="isLoading" size="25" />
+            {{
+              props.selectedChair.isBooked ? "Удалить бронь" : "Забронировать"
+            }}
           </button>
         </form>
       </div>
