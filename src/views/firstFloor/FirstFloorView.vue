@@ -27,7 +27,7 @@ const props = defineProps({
               y="0"
               width="100%"
               height="100%"
-              xlink:href="@/assets/images/floor1/1.png"
+              xlink:href="@/assets/images/floor1/back.png"
           ></image>
           <rect
               width="100%"
@@ -46,7 +46,8 @@ const props = defineProps({
               },
               }"
               :key="item.id"
-              :d="item.path"
+              :d="item.path2"
+              :id="item.id"
               fill="white"
               fill-opacity="0.5"
               @click="$emit('modal-open', item)"
@@ -58,10 +59,11 @@ const props = defineProps({
           <rect
               v-for="item in store.firsFloorData"
               :key="item.id"
-              :x="item.react.x"
-              :y="item.react.y"
+              :x="item.react.x2"
+              :y="item.react.y2"
               :width="26"
               :height="26"
+              :id="item.id"
               :fill="
               item?.isBooked ? 'url(#pattern0_284_4)' : 'url(#pattern1_284_4)'
             "
