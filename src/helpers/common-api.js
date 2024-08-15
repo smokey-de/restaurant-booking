@@ -24,7 +24,6 @@ export const myStore = defineStore("myStore", () => {
       (res) => res.json()
     );
 
-    // data.value = chairsPathFloor1_1;
     const result = [];
     for (const item of res) {
       for (const chair of chairsPathFloor1_1) {

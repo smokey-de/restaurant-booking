@@ -50,6 +50,9 @@
         background: #eee;
         color: #5F6368;
         font-weight: 700;
+        &:disabled {
+            cursor: not-allowed;
+        }
       }
 
       span {

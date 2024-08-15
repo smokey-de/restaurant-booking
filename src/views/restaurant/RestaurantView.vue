@@ -13,7 +13,9 @@ const modalOpen = (item) => {
 
 const modalClose = () => {
   isModal.value = false;
-  selectedChair.value = {};
+  setTimeout(() => {
+    selectedChair.value = {};
+  }, 300);
 };
 </script>
 
