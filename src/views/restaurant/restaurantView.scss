@@ -99,20 +99,23 @@
   }
 }
 
-.scene_wrapper{
+.scene_wrapper_box{
   position: absolute;
   bottom: 30px;
-  left: 45%;
+  width: 100%;
+
+.scene_wrapper{
+  gap: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-
   .scene_wrapper_item{
     cursor: pointer;
     padding: 3px 12px;
     border-radius: 30px;
     border: 1px solid rgb(95, 99, 104);
     background: white;
+    color: #5F6368;
   }
+}
 }
