@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import { chairsPathFloor1_1 } from "./svgPath";
+import { chairsPath } from "./svgPath";
 import { defineStore } from "pinia";
 
 function useInitializeStore(apiCall) {
@@ -17,16 +17,17 @@ function useInitializeStore(apiCall) {
 }
 
 export const myStore = defineStore("myStore", () => {
-  const data = ref(chairsPathFloor1_1);
-
+  const data = ref([]);
+  const isLoading = ref(false);
   async function getChairDate() {
+    isLoading.value = true;
     const res = await fetch("https://json-server-crfx.onrender.com/data").then(
       (res) => res.json()
     );
 
     const result = [];
     for (const item of res) {
-      for (const chair of chairsPathFloor1_1) {
+      for (const chair of chairsPath) {
         if (chair.id === item.id) {
           result.push({
             ...chair,
@@ -36,6 +37,7 @@ export const myStore = defineStore("myStore", () => {
       }
     }
     data.value = result;
+    isLoading.value = false;
   }
 
   getChairDate();
@@ -47,5 +49,5 @@ export const myStore = defineStore("myStore", () => {
     data.value.filter((item) => item.floor === 2)
   );
 
-  return { firsFloorData, secondFloorData, getChairDate };
+  return { firsFloorData, secondFloorData, getChairDate,isLoading };
 });

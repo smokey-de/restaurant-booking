@@ -4,6 +4,7 @@ import InputText from "primevue/inputtext";
 import InputMask from "primevue/inputmask";
 import {VueSpinner} from "vue3-spinners";
 import {myStore} from "@/helpers/common-api.js";
+// import { toast } from 'vue3-toastify';
 
 const store = myStore();
 
@@ -65,7 +66,7 @@ const onSubmit = () => {
           store.getChairDate();
           props.modalClose();
           isLoading.value = false;
-        }, 1000);
+        }, 500);
       })
       .catch((error) => {
         isLoading.value = false;
