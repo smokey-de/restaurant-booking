@@ -4,7 +4,6 @@ import InputText from "primevue/inputtext";
 import InputMask from "primevue/inputmask";
 import { VueSpinner } from "vue3-spinners";
 import { myStore } from "@/helpers/common-api.js";
-// import { toast } from 'vue3-toastify';
 
 const store = myStore();
 
@@ -24,7 +23,9 @@ watch(
   (newValue) => {
     formValues.value = {
       name: newValue?.name,
-      phone_number: newValue?.phone_number,
+      phone_number: newValue?.phone_number?.length
+        ? newValue?.phone_number
+        : "+998 (__) ___-__-__",
     };
   }
 );
@@ -72,7 +73,7 @@ const onSubmit = () => {
 };
 
 const checkPhoneNumber = (value) => {
-  return value.replace(/\D/g, "").length === 9;
+  return value.replace(/\D/g, "").length === 12;
 };
 </script>
 
@@ -93,8 +94,9 @@ const checkPhoneNumber = (value) => {
             <label class="modal__form-label">Номер телефона</label>
             <InputMask
               v-model="formValues.phone_number"
-              mask="+(99) 999-99-99"
-              placeholder="+(99) 999-99-99"
+              slotChar="+998 (__) ___-__-__"
+              mask="+998 (99) 999-99-99"
+              placeholder="+998 (xx) xxx-xx-xx"
               :disabled="props.selectedChair.isBooked"
             />
           </div>
