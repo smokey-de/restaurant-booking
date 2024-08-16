@@ -98,3 +98,24 @@
     content: 'Loading';
   }
 }
+
+.scene_wrapper_box{
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+
+.scene_wrapper{
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .scene_wrapper_item{
+    cursor: pointer;
+    padding: 3px 12px;
+    border-radius: 30px;
+    border: 1px solid rgb(95, 99, 104);
+    background: white;
+    color: #5F6368;
+  }
+}
+}

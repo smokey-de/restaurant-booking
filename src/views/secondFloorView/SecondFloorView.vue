@@ -10,6 +10,7 @@ const props = defineProps({
     default: () => {
     },
   },
+  scene: Number,
 });
 </script>
 
@@ -23,11 +24,20 @@ const props = defineProps({
             class="mask"
         >
           <image
+              v-if="props.scene === 1"
               x="0"
               y="0"
               width="100%"
               height="100%"
               xlink:href="@/assets/images/floor2/2.png"
+          ></image>
+          <image
+              v-else
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              xlink:href="@/assets/images/floor2/back.png"
           ></image>
           <rect
               width="100%"
@@ -46,7 +56,8 @@ const props = defineProps({
               },
               }"
               :key="item.id"
-              :d="item.path"
+              :id="item.id"
+              :d="props.scene ? item.path : item.path2"
               fill="white"
               fill-opacity="0.5"
               @click="$emit('modal-open', item)"
@@ -58,8 +69,9 @@ const props = defineProps({
           <rect
               v-for="item in store.secondFloorData"
               :key="item.id"
-              :x="item.react.x"
-              :y="item.react.y"
+              :id="item.id"
+              :x="props.scene ? item.react.x : item.react.x2"
+              :y="props.scene ? item.react.y : item.react.y2"
               :width="26"
               :height="26"
               :fill="

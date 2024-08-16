@@ -10,7 +10,10 @@ const props = defineProps({
     default: () => {
     },
   },
+  scene: Number,
 });
+
+
 </script>
 
 <template>
@@ -23,6 +26,15 @@ const props = defineProps({
             class="mask"
         >
           <image
+              v-if="props.scene === 1"
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              xlink:href="@/assets/images/floor1/1.png"
+          ></image>
+          <image
+              v-else
               x="0"
               y="0"
               width="100%"
@@ -46,7 +58,7 @@ const props = defineProps({
               },
               }"
               :key="item.id"
-              :d="item.path2"
+              :d="props.scene ? item.path : item.path2"
               :id="item.id"
               fill="white"
               fill-opacity="0.5"
@@ -59,8 +71,8 @@ const props = defineProps({
           <rect
               v-for="item in store.firsFloorData"
               :key="item.id"
-              :x="item.react.x2"
-              :y="item.react.y2"
+              :x="props.scene ? item.react.x : item.react.x2"
+              :y="props.scene ? item.react.y : item.react.y2"
               :width="26"
               :height="26"
               :id="item.id"
