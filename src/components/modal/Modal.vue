@@ -49,13 +49,16 @@ const onSubmit = () => {
 
   isLoading.value = true;
 
-  fetch(`http://188.225.27.65:3006/data/${props.selectedChair.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  })
+  fetch(
+    `https://json-server-crfx.onrender.com/data/${props.selectedChair.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  )
     .then((response) => response.json())
     .then((data) => {
       setTimeout(() => {
