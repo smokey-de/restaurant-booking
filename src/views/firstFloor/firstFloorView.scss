@@ -40,3 +40,13 @@
   border-radius: 20px;
   background: white;
 }
+
+input[type='file']::file-selector-button{
+  background-color: #f9427c;
+  color: #fff;
+  border-radius: 4px;
+  padding: 8px;
+  margin-right: 16px;
+  border: 0;
+  cursor: pointer;
+}
