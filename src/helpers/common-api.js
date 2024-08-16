@@ -21,8 +21,8 @@ export const myStore = defineStore("myStore", () => {
   const isLoading = ref(false);
   async function getChairDate() {
     isLoading.value = true;
-    const res = await fetch("https://json-server-crfx.onrender.com/data").then(
-      (res) => res.json()
+    const res = await fetch("http://188.225.27.65:3006/data").then((res) =>
+      res.json()
     );
 
     const result = [];
@@ -49,5 +49,5 @@ export const myStore = defineStore("myStore", () => {
     data.value.filter((item) => item.floor === 2)
   );
 
-  return { firsFloorData, secondFloorData, getChairDate,isLoading };
+  return { firsFloorData, secondFloorData, getChairDate, isLoading };
 });
