@@ -50,7 +50,7 @@ const onSubmit = () => {
   isLoading.value = true;
 
   fetch(
-    `https://json-server-crfx.onrender.com/data/${props.selectedChair.id}`,
+    `https://stingray-app-662wb.ondigitalocean.app/data/${props.selectedChair.id}`,
     {
       method: "PUT",
       headers: {
