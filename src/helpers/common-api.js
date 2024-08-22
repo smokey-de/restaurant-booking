@@ -1,6 +1,7 @@
 import { computed, ref } from "vue";
 import { chairsPath } from "./svgPath";
 import { defineStore } from "pinia";
+import { ApiURL } from "@/helpers/constant.js";
 
 function useInitializeStore(apiCall) {
   const initialized = ref(false);
@@ -21,9 +22,7 @@ export const myStore = defineStore("myStore", () => {
   const isLoading = ref(false);
   async function getChairDate() {
     isLoading.value = true;
-    const res = await fetch(
-      "https://stingray-app-662wb.ondigitalocean.app/data"
-    ).then((res) => res.json());
+    const res = await fetch(`${ApiURL}/data`).then((res) => res.json());
 
     const result = [];
     for (const item of res) {

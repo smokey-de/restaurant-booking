@@ -4,6 +4,7 @@ import InputText from "primevue/inputtext";
 import InputMask from "primevue/inputmask";
 import { VueSpinner } from "vue3-spinners";
 import { myStore } from "@/helpers/common-api.js";
+import { ApiURL } from "@/helpers/constant.js";
 
 const store = myStore();
 
@@ -49,16 +50,13 @@ const onSubmit = () => {
 
   isLoading.value = true;
 
-  fetch(
-    `https://stingray-app-662wb.ondigitalocean.app/data/${props.selectedChair.id}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    }
-  )
+  fetch(`${ApiURL}/data/${props.selectedChair.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
     .then((response) => response.json())
     .then((data) => {
       setTimeout(() => {
